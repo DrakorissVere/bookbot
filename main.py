@@ -3,12 +3,20 @@ def count_letters(string):
     letters = {}
 
     for c in string:
+        if not c.isalpha():
+            continue
+
         if c in letters:
             letters[c] += 1
         else:
             letters[c] = 1
 
-    return letters
+    return dict(sorted(letters.items(), key=lambda i: i[1], reverse=True))
+
+
+def print_letters_report(dictionary):
+    for c in dictionary:
+        print(f"The '{c}' character was found {dictionary[c]} times")
 
 
 def count_words(string):
@@ -19,9 +27,8 @@ def count_words(string):
 def main():
     with open("books/frankenstein.txt") as f:
         contents = f.read()
-        print(f"There is {count_words(contents)} words")
-        print("There are this amount of symbols:")
-        print(count_letters(contents))
+        print(f"{count_words(contents)} words found in the document\n")
+        print_letters_report(count_letters(contents))
 
 
 main()
